@@ -21,6 +21,6 @@ variable "libvirt_pool_path" {
 variable "images" {
   type    = map
   default = {
-    debian9 = "/Users/cwilson/projects/images/debian9_base.qcow2"
+    debian9 = "/Users/cwilson/projects/images/debian9-4.2.20.qcow2"
   }
 }
