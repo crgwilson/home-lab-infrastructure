@@ -39,19 +39,20 @@ variable "autostart" {
 }
 
 variable "network_id" {
-  description = "The ID of the libvirt network to put this VM onto"
+  description = "The ID of the libvirt network to put this VM onto (Either this or bridge must be set)"
   type        = string
+  default     = null
 }
 
-variable "ip" {
-  description = "The DHCP address which should be allocated to the created VM (this will be incremented if machines is > 1)"
+variable "bridge" {
+  description = "The name of the bridge interface to use (Either this or network_id must be set)"
   type        = string
+  default     = null
 }
 
 variable "libvirt_pool_name" {
   description = "The name of the libvirt storage pool in which the domain will be created"
   type        = string
-  default     = "domains"
 }
 
 variable "primary_volume_source" {

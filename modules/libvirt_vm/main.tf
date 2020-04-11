@@ -39,17 +39,8 @@ resource "libvirt_domain" "domain" {
 
   network_interface {
     network_id = var.network_id
-    hostname   = "${var.name}-${count.index +1}"
-    addresses  = [
-      format(
-        "%s.%s.%s.%s",
-        element(split(".", var.ip), 0),
-        element(split(".", var.ip), 1),
-        element(split(".", var.ip), 2),
-        element(split(".", var.ip), 3) + count.index
-      )
-    ]
-    wait_for_lease = true
+    bridge     = var.bridge
+    wait_for_lease = false
   }
 
   graphics {
