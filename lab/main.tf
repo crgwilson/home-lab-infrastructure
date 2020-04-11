@@ -13,7 +13,8 @@ resource "libvirt_network" "nat_net_1" {
   name      = "nat_net_1"
   mode      = "nat"
   domain    = var.domain
-  mtu = 1500
+  autostart = true
+  mtu       = 1500
 
   addresses = [
     var.network_cidr
@@ -34,26 +35,30 @@ resource "libvirt_network" "nat_net_1" {
 }
 
 resource "libvirt_network" "bridge_net_1" {
-  name   = "bridge_net_1"
-  mode   = "bridge"
-  bridge = var.bridge_interface
+  name      = "bridge_net_1"
+  mode      = "bridge"
+  bridge    = var.bridge_interface
+  autostart = true
 }
 
 resource "libvirt_pool" "pool" {
-  name = "domains"
+  name = var.libvirt_pool_name
   type = "dir"
   path = var.libvirt_pool_path
 }
 
-module "test_domain" {
+module "mytestdomain" {
   source = "../modules/libvirt_vm"
 
-  name                  = "worker"
-  description           = "For doing very important work, obviously"
-  network_id            = libvirt_network.nat_net_1.id
-  ip                    = "10.100.0.5"
-  primary_volume_source = var.images.debian9
-  secondary_volume_size = 21474836480
+  machines = 0
 
-  module_depends_on     = [libvirt_pool.pool]
+  name        = "mytestdomain"
+  description = "rip"
+  autostart   = true
+  network_id  = libvirt_network.nat_net_1.id
+  # bridge = "br0"
+  libvirt_pool_name     = var.libvirt_pool_name
+  primary_volume_source = var.images.debian9
+
+  module_depends_on = [libvirt_pool.pool]
 }

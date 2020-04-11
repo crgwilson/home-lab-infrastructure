@@ -1,25 +1,36 @@
 variable "domain" {
-  type    = string
-  default = "home.garbage-day.dev"
+  description = "The domain to use when creating the libvirt nat network"
+  type        = string
+  default     = "home.garbage-day.dev"
 }
 
 variable "network_cidr" {
-  type    = string
-  default = "10.100.0.0/24"
+  description = "The subnet to use for the libvirt nat network"
+  type        = string
+  default     = "10.100.0.0/24"
 }
 
 variable "bridge_interface" {
-  type    = string
-  default = "br0"
+  description = "The bridge interface which already exists on the libvirt host"
+  type        = string
+  default     = "br0"
+}
+
+variable "libvirt_pool_name" {
+  description = "The name of the libvirt pool to create"
+  type        = string
+  default     = "domains"
 }
 
 variable "libvirt_pool_path" {
-  type    = string
-  default = "/home/cwilson/domains"
+  description = "The file path of the libvirt pool to create"
+  type        = string
+  default     = "/home/cwilson/domains"
 }
 
 variable "images" {
-  type    = map
+  description = "All the qcow2 images to use when creating domains"
+  type        = map
   default = {
     debian9 = "/Users/cwilson/projects/images/debian9-4.2.20.qcow2"
   }
