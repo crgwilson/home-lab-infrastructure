@@ -1,18 +1,18 @@
 resource "libvirt_volume" "vol_1" {
-  count      = var.machines
-  name       = "${var.name}-${count.index + 1}-volume1"
-  pool       = var.libvirt_pool_name
-  source     = var.primary_volume_source
+  count  = var.machines
+  name   = "${var.name}-${count.index + 1}-volume1"
+  pool   = var.libvirt_pool_name
+  source = var.primary_volume_source
 
   depends_on = [var.module_depends_on]
 }
 
 resource "libvirt_volume" "vol_2" {
-  count      = var.machines
-  name       = "${var.name}-${count.index + 1}-volume2"
-  pool       = var.libvirt_pool_name
-  format     = "qcow2"
-  size       = var.secondary_volume_size
+  count  = var.machines
+  name   = "${var.name}-${count.index + 1}-volume2"
+  pool   = var.libvirt_pool_name
+  format = "qcow2"
+  size   = var.secondary_volume_size
 
   depends_on = [var.module_depends_on]
 }
@@ -38,8 +38,8 @@ resource "libvirt_domain" "domain" {
   }
 
   network_interface {
-    network_id = var.network_id
-    bridge     = var.bridge
+    network_id     = var.network_id
+    bridge         = var.bridge
     wait_for_lease = false
   }
 
