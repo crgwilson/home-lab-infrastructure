@@ -47,18 +47,18 @@ resource "libvirt_pool" "pool" {
   path = var.libvirt_pool_path
 }
 
-module "mytestdomain" {
+module "ipa" {
   source = "../modules/libvirt_vm"
 
-  machines = 0
+  machines = 1
 
-  name        = "mytestdomain"
-  description = "rip"
-  autostart   = true
-  network_id  = libvirt_network.nat_net_1.id
-  # bridge = "br0"
+  name        = "ipa"
+  description = "Home lab FreeIPA instance"
+
+  autostart             = true
+  bridge                = var.bridge_interface
   libvirt_pool_name     = var.libvirt_pool_name
-  primary_volume_source = var.images.debian9
+  primary_volume_source = var.images.centos8
 
   module_depends_on = [libvirt_pool.pool]
 }
