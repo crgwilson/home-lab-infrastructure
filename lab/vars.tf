@@ -32,8 +32,8 @@ variable "images" {
   description = "All the qcow2 images to use when creating domains"
   type        = map
   default = {
-    debian9  = "/home/cwilson/projects/images/debian9-4.2.20.qcow2"
-    debian10 = "/home/cwilson/projects/images/debian10-2020-04-26.qcow2"
-    centos8  = "/home/cwilson/projects/images/centos8-2020-04-26.qcow2"
+    debian9  = "/home/cwilson/images/debian9-4.2.20.qcow2"
+    debian10 = "/home/cwilson/images/debian10-2020-04-26.qcow2"
+    centos8  = "/home/cwilson/images/centos8-2020-04-26.qcow2"
   }
 }

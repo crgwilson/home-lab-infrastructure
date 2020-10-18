@@ -47,37 +47,41 @@ resource "libvirt_pool" "pool" {
   path = var.libvirt_pool_path
 }
 
-module "ipa" {
+module "node" {
   source = "../modules/libvirt_vm"
 
-  machines = 1
+  machines = 2
 
-  name        = "ipa"
-  description = "Home lab FreeIPA instance"
-
-  autostart             = true
-  bridge                = var.bridge_interface
-  libvirt_pool_name     = var.libvirt_pool_name
-  primary_volume_source = var.images.centos8
-
-  module_depends_on = [libvirt_pool.pool]
-}
-
-module "es" {
-  source = "../modules/libvirt_vm"
-
-  machines = 1
-
-  name        = "es"
-  description = "Elasticsearch VM for fun and giggles"
+  name        = "node"
+  description = "Run stuff"
 
   cpu_count = 2
-  memory    = 4096
+  memory    = 2048
 
   autostart             = false
   bridge                = var.bridge_interface
   libvirt_pool_name     = var.libvirt_pool_name
   primary_volume_source = var.images.debian10
+
+  module_depends_on = [libvirt_pool.pool]
+}
+
+module "nfs" {
+  source = "../modules/libvirt_vm"
+
+  machines = 1
+
+  name        = "nfs"
+  description = "VM to serve NFS shares"
+
+  cpu_count = 1
+  memory    = 1024
+
+  autostart             = false
+  bridge                = var.bridge_interface
+  libvirt_pool_name     = var.libvirt_pool_name
+  primary_volume_source = var.images.debian10
+  secondary_volume_size = 26843545600
 
   module_depends_on = [libvirt_pool.pool]
 }
