@@ -26,4 +26,6 @@
 .vagrant/
 *.retry
 *.swp
-.terraform
+.terraform*
+secret.tf
+output
